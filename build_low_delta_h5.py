@@ -1,6 +1,3 @@
-%matplotlib inline
-%load_ext Cython
-import matplotlib.pyplot as plt
 from ml_utils import list_h5s
 import pandas as pd
 import numpy as np
@@ -24,6 +21,7 @@ def build_prc_h5(lo,hi,md_root = "/home/jgreenwald/md/korea/"):
             store = pd.HDFStore(md_root+d+'.h5','r')
             hey = store['front']
             store.close()
+            print hey.shape
             hey = hey.ix[np.logical_and(hey.ap0>lo,hey.ap0<hi),:]
             save[d] = hey
         except:
@@ -32,7 +30,7 @@ def build_prc_h5(lo,hi,md_root = "/home/jgreenwald/md/korea/"):
     save.close()
 
 def main(argv):
-    build_prc_h5(argv[0],argv[1])
+    build_prc_h5(float(sys.argv[1]),float(sys.argv[2]))
 
 if __name__ == "__main__":
-    sys.exit(main(argv))
+    sys.exit(main(sys.argv))
